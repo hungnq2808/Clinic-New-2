@@ -37,6 +37,7 @@ public class ManageDashboard extends HttpServlet {
         try {
             String action = request.getParameter("action");
             List<Appointment> appointmentlist = appointmentdao.getAllAppointment();
+            List<Appointment> appointmentstoday = appointmentdao.getAppointmentListByDate("today");
             if (action.equals("default")) {
                 List<Statistic> appointment7day = appointmentdao.getDataLast7Day("7day");
                 request.setAttribute("Revenue", appointmentdao.sumServiceFee("month"));
@@ -45,7 +46,7 @@ public class ManageDashboard extends HttpServlet {
                 session.setAttribute("rtype", "month");
                 request.setAttribute("Revenueappointment", appointmentdao.sumServiceFee("month"));
 //                request.setAttribute("Revenuemedicine", appointmentdao.sumMedicineFee("month"));
-               
+
             }
             if (action.contains("statistic")) {
                 String atype = request.getParameter("atype");
@@ -61,6 +62,8 @@ public class ManageDashboard extends HttpServlet {
             request.setAttribute("appointment", appointmentdao.CountAppointment());
             request.setAttribute("doctor", doctordao.CountDoctor());
             request.setAttribute("appointmentlist", appointmentlist);
+            request.setAttribute("appointmentstoday", appointmentstoday);
+
             request.getRequestDispatcher("admin/dashboard.jsp").forward(request, response);
         } catch (IOException | ServletException e) {
 

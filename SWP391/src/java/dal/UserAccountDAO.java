@@ -420,12 +420,12 @@ public class UserAccountDAO extends DBContext {
                 + "      ,[location_id]\n"
                 + "      ,[specialization_id]\n"
                 + "  FROM [dbo].[user_account]\n"
-                + "  where name like ?";
+                + "  where [name] like ?";
         LocationDAO ld = new LocationDAO();
         SpecializationDAO sped = new SpecializationDAO();
         try {
             PreparedStatement st = connection.prepareStatement(sql);
-            st.setString(1, name);
+            st.setString(1, "%"+name+"%");
             ResultSet rs = st.executeQuery();
             UserAccount ud;
             while (rs.next()) {

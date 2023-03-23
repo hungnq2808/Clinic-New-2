@@ -46,38 +46,37 @@ public class patientController extends HttpServlet {
 
         try {
             if (action.equals("all")) {
-                url = "patientmanage?action=all";
+                url = "patient?action=all";
                 patientlist = patientdao.getAllPatient();
             }
             
             if (action.equals("search")) {
                 String search = request.getParameter("search");
-                url = "patientmanage?action=search&search="+search;
-                patientlist = patientdao.getPatientByName(search);
+                url = "patient?action=search&search="+search;
+                patientlist = patientdao.searchByName(search);
             }
          
             if (action.equals("detail")) {
-                String username = request.getParameter("username");
-                Patient patient = new Patient();
-                patient = patientdao.getPatientByUsername(username);
+                int pid = Integer.parseInt(request.getParameter("pid"));
+                Patient patient = patientdao.getPatientById(pid);
                 request.setAttribute("patient", patient);
                 request.getRequestDispatcher("admin/patientdetail.jsp").forward(request, response);
             }
 
             if (action.equals("update_patient")) {
-                int patient_id = Integer.parseInt(request.getParameter("patient_id"));
-                int phone = Integer.parseInt(request.getParameter("phone"));
+                int pid = Integer.parseInt(request.getParameter("patient_id"));
+                String phone =request.getParameter("phone");
                 String name = request.getParameter("name");
-                String adress = request.getParameter("address");
+                String email = request.getParameter("email");
+                String address = request.getParameter("address");
                 boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-                boolean status = Boolean.parseBoolean(request.getParameter("status"));
                 Date dob = Date.valueOf(request.getParameter("DOB"));
-                patientdao.updatePatient(new Patient(name, phone, email, gender,address, dob));
+                patientdao.updatePatient(new Patient(pid,name, phone, email, gender,address, dob));
                 alert = "success";
                 message = "Cập nhật thôn tin thành công";
                 request.setAttribute("alert", alert);
                 request.setAttribute("message", message);
-                request.getRequestDispatcher("patientmanage?action=detail&username=" + username).forward(request, response);
+                request.getRequestDispatcher("patient?action=detail&pid=" + pid).forward(request, response);
             }
             
             if (patientlist != null) {
@@ -97,7 +96,7 @@ public class patientController extends HttpServlet {
                 request.setAttribute("page", page);
                 request.setAttribute("num", num);
                 request.setAttribute("url", url);
-                request.setAttribute("patientlist", patientlist);
+                request.setAttribute("list", patientlist);
                 request.setAttribute("patientDetails", patientDetails);
                 request.getRequestDispatcher("admin/patient.jsp").forward(request, response);
             }

@@ -112,7 +112,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach items="${appointmentlist}" var="a">
+                                            <c:forEach items="${appointmentstoday}" var="a">
                                                 <tr>
                                                     <td class="p-3">${a.getPd().getPatientName()}</td>
                                                     <td class="p-3">${a.getUa().getName()}</td>

@@ -32,14 +32,7 @@
                                         </div>
                                     </div> 
                                 </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="justify-content-md-end row">
-                                    <div class="d-grid">
-                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filter">Lọc</a>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
 
                         <div class="row">
@@ -51,24 +44,28 @@
                                                 <th class="border-bottom p-3" >ID</th>
                                                 <th class="border-bottom p-3" >Họ tên</th>
                                                 <th class="border-bottom p-3" >Giới tính</th>
+                                                <th class="border-bottom p-3" >Số điện thoại</th>
                                                 <th class="border-bottom p-3" >Ngày sinh</th>
+                                                <th class="border-bottom p-3" >Địa chỉ</th>
                                                 <th class="border-bottom p-3" ></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${list}" var="a">
+                                            <c:forEach items="${list}" var="p">
                                                 <tr>
-                                                    <th class="p-3">${a.id}</th>
-                                                    <td class="p-3">${a.patientName}</td>
-                                                    <c:if test="${a.patientGender == true}">
+                                                    <th class="p-3">${p.id}</th>
+                                                    <td class="p-3">${p.patientName}</td>
+                                                    <c:if test="${p.patientGender == true}">
                                                         <td class="p-3">Nam</td>
                                                     </c:if>
-                                                    <c:if test="${a.patientGender == false}">
+                                                    <c:if test="${p.patientGender == false}">
                                                         <td class="p-3">Nữ</td>
                                                     </c:if>
-                                                    <td class="p-3"><fmt:formatDate pattern="dd/MM/yyyy" value="${a.patientDob}" /></td>                                                    
+                                                    <td class="p-3">${p.patientPhoneNumber}</td>    
+                                                    <td class="p-3"><fmt:formatDate pattern="dd/MM/yyyy" value="${p.patientDob}" /></td>  
+                                                    <td class="p-3">${p.patientAddress}</td>
                                                     <td class="text-end p-3">
-                                                        <a href="patientmanage?action=detail&id=${a.id}" type="button"class="btn btn-info">Chi tiết</a>
+                                                        <a href="patient?action=detail&pid=${p.id}" type="button"class="btn btn-info">Chi tiết</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

@@ -20,7 +20,7 @@ import model.Patient;
  */
 public class PatientDAO extends DBContext {
 
-    public List<Patient> getAllPatient(){
+    public List<Patient> getAllPatient() {
         List<Patient> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
                 + "      ,[patient_name]\n"
@@ -34,7 +34,7 @@ public class PatientDAO extends DBContext {
             PreparedStatement st = connection.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             Patient pd;
-            while(rs.next()){
+            while (rs.next()) {
                 pd = new Patient();
                 pd.setId(rs.getInt("id"));
                 pd.setPatientName(rs.getString("patient_name"));
@@ -50,6 +50,7 @@ public class PatientDAO extends DBContext {
         }
         return list;
     }
+
     public Patient getPatientById(int id) {
         String sql = "SELECT [id]\n"
                 + "      ,[patient_name]\n"
@@ -129,6 +130,33 @@ public class PatientDAO extends DBContext {
         }
     }
 
+    public ArrayList<Patient> searchByName(String name) {
+        ArrayList<Patient> list = new ArrayList<>();
+        String sql = "SELECT [id]\n"
+                + "      ,[patient_name]\n"
+                + "      ,[patient_phone_number]\n"
+                + "      ,[patient_email]\n"
+                + "      ,[patient_gender]\n"
+                + "      ,[patient_address]\n"
+                + "      ,[dob]\n"
+                + "  FROM [dbo].[patients]\n"
+                + "  WHERE [patient_name] LIKE ?";
+        Patient p ;
+        try {
+            
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, "%"+name+"%");
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                p = new Patient(rs.getInt("id"), rs.getString("patient_name"), rs.getString("patient_phone_number"), rs.getString("patient_email"), rs.getBoolean("patient_gender"), rs.getString("patient_address"), rs.getDate("dob"));
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException e) {
+        }
+        return null;
+    }
+
     public Patient getPatientsDetailsByOtherFeature(String name, String phone, String email) {
         String sql = "SELECT [id]\n"
                 + "      ,[patient_name]\n"
@@ -204,7 +232,7 @@ public class PatientDAO extends DBContext {
         }
         return arr;
     }
-    
+
     public static void main(String[] args) {
         PatientDAO pd = new PatientDAO();
 //        Patient p = new Patient("quang anh", "0971623121", "quanganh@gmail.com", true, "ajshdqw", "2002-8-13");
