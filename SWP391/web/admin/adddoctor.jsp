@@ -74,7 +74,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="mb-3">                                               
-                                                    <label class="form-label">Location:  <span class="text-danger">*</span></label>
+                                                    <label class="form-label">Location:</label>
                                                     <select name="locationid" class="form-control doctor-name select2input">
                                                         <c:forEach items="${requestScope.lsld}" var="ld">
                                                             <option value="${ld.getId()}">${ld.getName()}</option>
@@ -98,8 +98,8 @@
                                                                                                                           
                                                <div class="col-md-6">
                                                 <div class="mb-3">
-                                                    <label class="form-label">Address:  <span class="text-danger">*</span></label>
-                                                    <input name="dob" type="text" onkeydown="return false" min="1923-01-01" max="2004-01-01" class="form-control" required=""></input>
+                                                    <label class="form-label">Address:</label>
+                                                    <input name="Address" type="text"  class="form-control"></input>
                                                 </div>
                                             </div>                                                                                  
                                                                                                                           

@@ -196,6 +196,15 @@ public class PatientDAO extends DBContext {
         }
     }
 
+    public List<Patient> getListByPage(List<Patient> list,
+            int start, int end) {
+        ArrayList<Patient> arr = new ArrayList<>();
+        for (int i = start; i < end; i++) {
+            arr.add(list.get(i));
+        }
+        return arr;
+    }
+    
     public static void main(String[] args) {
         PatientDAO pd = new PatientDAO();
 //        Patient p = new Patient("quang anh", "0971623121", "quanganh@gmail.com", true, "ajshdqw", "2002-8-13");

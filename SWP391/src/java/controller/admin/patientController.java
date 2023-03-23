@@ -9,6 +9,7 @@ import dal.PatientDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,71 +34,75 @@ public class patientController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
+        PatientDAO patientdao = new PatientDAO();
+        List<Patient> patientlist = null;
+        String url = null;
+        String alert = null;
+        String message = null;
         String action = request.getParameter("action");
-        String page_raw = request.getParameter("pageid");
+
         try {
-            if (action == null) {
-                action = "load";
-            } else if (page_raw == null || page_raw.equals("0")) {
-                page_raw = "1";
+            if (action.equals("all")) {
+                url = "patientmanage?action=all";
+                patientlist = patientdao.getAllPatient();
             }
-//            Load detail from patient
-            if (action.equalsIgnoreCase("load")) {
-                PatientDAO dao = new PatientDAO();
-                List<Patient> listAllPatient;
-                listAllPatient = dao.getAllPatient();
-                request.setAttribute("listAllPatient", listAllPatient);
-                request.getRequestDispatcher("patient.jsp").forward(request, response);
+            
+            if (action.equals("search")) {
+                String search = request.getParameter("search");
+                url = "patientmanage?action=search&search="+search;
+                patientlist = patientdao.getPatientByName(search);
             }
-
-//              Delete patient
-            if (action.equalsIgnoreCase("disable")) {
-                String pid = request.getParameter("pid");
-                PatientDAO dao = new PatientDAO();
-                dao.deletePatientsById(Integer.parseInt(pid));
-                response.sendRedirect("patient");
-            }
-
-//              Detail patient
-            if (action.equalsIgnoreCase("detail")) {
-                String pid = request.getParameter("pid");
-                PatientDAO dao = new PatientDAO();
-                Patient patient = dao.getPatientById(Integer.parseInt(pid));
+         
+            if (action.equals("detail")) {
+                String username = request.getParameter("username");
+                Patient patient = new Patient();
+                patient = patientdao.getPatientByUsername(username);
                 request.setAttribute("patient", patient);
-                request.getRequestDispatcher("patientdetail.jsp").forward(request, response);
+                request.getRequestDispatcher("admin/patientdetail.jsp").forward(request, response);
             }
-//                      Add user
-            if (action.equalsIgnoreCase("add")) {
-                request.getRequestDispatcher("patientdetail.jsp").forward(request, response);
-                PatientDAO dao = new PatientDAO();
-                String phone = request.getParameter("phone");
-                String email = request.getParameter("email");
-                String firstName = request.getParameter("firstName");
-                String lastName = request.getParameter("lastName");
+
+            if (action.equals("update_patient")) {
+                int patient_id = Integer.parseInt(request.getParameter("patient_id"));
+                int phone = Integer.parseInt(request.getParameter("phone"));
+                String name = request.getParameter("name");
+                String adress = request.getParameter("address");
                 boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-                Date dob = Date.valueOf(request.getParameter("dob"));
-                String address = request.getParameter("address");
-                
-                dao.createPatientsDetails(new Patient(firstName+ " " + lastName, phone, email, gender, address, dob));
-                request.getRequestDispatcher("patientdetail.jsp").forward(request, response);
+                boolean status = Boolean.parseBoolean(request.getParameter("status"));
+                Date dob = Date.valueOf(request.getParameter("DOB"));
+                patientdao.updatePatient(new Patient(name, phone, email, gender,address, dob));
+                alert = "success";
+                message = "Cập nhật thôn tin thành công";
+                request.setAttribute("alert", alert);
+                request.setAttribute("message", message);
+                request.getRequestDispatcher("patientmanage?action=detail&username=" + username).forward(request, response);
             }
-//          Update patient
-            if (action.equalsIgnoreCase("update")) {
-                PatientDAO dao = new PatientDAO();
-                int pid = Integer.parseInt(request.getParameter("pid"));
-                String phone = request.getParameter("phone");
-                String email = request.getParameter("email");
-                String firstName = request.getParameter("firstName");
-                String lastName = request.getParameter("lastName");
-                boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
-                Date dob = Date.valueOf(request.getParameter("dob"));
-                String address = request.getParameter("address");
-                dao.updatePatient(new Patient(pid,firstName + " " +lastName, phone, email,gender,address,dob));
-                request.getRequestDispatcher("patient?action=detail&pid=" + pid).forward(request, response);
+            
+            if (patientlist != null) {
+                int page, numperpage = 8;
+                int size = patientlist.size();
+                int num = (size % 8 == 0 ? (size / 8) : ((size / 8)) + 1);//so trang
+                String xpage = request.getParameter("page");
+                if (xpage == null) {
+                    page = 1;
+                } else {
+                    page = Integer.parseInt(xpage);
+                }
+                int start, end;
+                start = (page - 1) * numperpage;
+                end = Math.min(page * numperpage, size);
+                List<Patient> patientDetails = patientdao.getListByPage(patientlist, start, end);
+                request.setAttribute("page", page);
+                request.setAttribute("num", num);
+                request.setAttribute("url", url);
+                request.setAttribute("patientlist", patientlist);
+                request.setAttribute("patientDetails", patientDetails);
+                request.getRequestDispatcher("admin/patient.jsp").forward(request, response);
             }
-        } catch (Exception e) {
+
+        } catch (IOException | ServletException e) {
             System.out.println(e);
         }
     }

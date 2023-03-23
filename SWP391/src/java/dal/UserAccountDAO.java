@@ -503,10 +503,10 @@ public class UserAccountDAO extends DBContext {
         }
     }
 
-    public boolean isExist(String email) {
+    public boolean isExist(String email, String phone) {
         List<UserAccount> list = getAllUserDetail();
         for (UserAccount a : list) {
-            if (a.getEmail().equals(email)) {
+            if (a.getEmail().equals(email)|| a.getPhone().equals(phone)) {
                 return true;
             }
         }

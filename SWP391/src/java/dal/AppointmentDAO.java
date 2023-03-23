@@ -24,8 +24,8 @@ public class AppointmentDAO extends DBContext {
     PreparedStatement ps;
     ResultSet rs;
     PatientDAO pd = new PatientDAO();
-        UserAccountDAO uad = new UserAccountDAO();
-        SlotDAO sd = new SlotDAO();
+    UserAccountDAO uad = new UserAccountDAO();
+    SlotDAO sd = new SlotDAO();
 
     public ArrayList<Appointment> getAllAppointment() {
         String sql = "SELECT [id]\n"
@@ -40,7 +40,7 @@ public class AppointmentDAO extends DBContext {
                 + "      ,[is_denided]\n"
                 + "  FROM [dbo].[appointments]";
         ArrayList<Appointment> ls = new ArrayList<>();
-        
+
         Appointment a;
         try {
             PreparedStatement st = connection.prepareStatement(sql);
@@ -94,6 +94,7 @@ public class AppointmentDAO extends DBContext {
         }
         return false;
     }
+
     public ArrayList<Appointment> getAppointmentManagerAcc() {
         ArrayList<Appointment> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
@@ -109,7 +110,7 @@ public class AppointmentDAO extends DBContext {
                 + "  FROM [dbo].[appointments]\n"
                 + "  where manager_accept = 0";
         try {
-            
+
             ps = connection.prepareStatement(sql);
 
             rs = ps.executeQuery();
@@ -137,6 +138,7 @@ public class AppointmentDAO extends DBContext {
         }
         return null;
     }
+
     public ArrayList<Appointment> getAppointmentDenied(boolean deni) {
         ArrayList<Appointment> list = new ArrayList<>();
         String sql = "SELECT [id]\n"
@@ -151,7 +153,7 @@ public class AppointmentDAO extends DBContext {
                 + "  FROM [dbo].[appointments]\n"
                 + "  where doctor_accept =  ?";
         try {
-           
+
             ps = connection.prepareStatement(sql);
             ps.setBoolean(1, deni);
             rs = ps.executeQuery();
@@ -218,8 +220,7 @@ public class AppointmentDAO extends DBContext {
         }
         return null;
     }
-    
-    
+
     public ArrayList<Appointment> getAppointmentByService() {
         ArrayList<Appointment> list = new ArrayList<>();
         String sql = "select appointments.id , patients.patient_name  , user_account.name ,appointments.date ,appointments.symptom, slot.date_schedule ,appointments.manager_accept\n"
@@ -228,7 +229,7 @@ public class AppointmentDAO extends DBContext {
                 + "                                     inner join user_account on appointments.user_detail_id = user_account.id					\n"
                 + "                                   inner join slot on appointments.booking_slot_id = slot.id";
         try {
-            
+
             ps = connection.prepareStatement(sql);
 
             rs = ps.executeQuery();
@@ -550,7 +551,7 @@ public class AppointmentDAO extends DBContext {
                 Date date = rs.getDate("date");
                 String symptom = rs.getString("symptom");
                 Slot slot = slotdao.getSlotById(rs.getInt("booking_slot_id"));
-                list.add(new Appointment(id,patient, ua, date, symptom, slot, today, true, true, true));
+                list.add(new Appointment(id, patient, ua, date, symptom, slot, today, true, true, true));
             }
         } catch (SQLException e) {
         }
@@ -739,13 +740,14 @@ public class AppointmentDAO extends DBContext {
         }
 
     }
+
     public void updateStatus(Appointment a) throws Exception {
 
         String sql = "UPDATE [dbo].[appointments]\n"
                 + "   SET [manager_accept] = ?\n"
                 + " WHERE id = ?";
         try {
-            
+
             ps = connection.prepareStatement(sql);
 
             ps.setBoolean(1, a.isManagerAccept());
@@ -756,6 +758,7 @@ public class AppointmentDAO extends DBContext {
         }
 
     }
+
     public void updateUserInApp(Appointment a, UserAccount u) throws Exception {
 
         String sql = "UPDATE [dbo].[appointments]\n"
@@ -770,18 +773,19 @@ public class AppointmentDAO extends DBContext {
         }
 
     }
+
     public static void main(String[] args) {
         AppointmentDAO ad = new AppointmentDAO();
         PatientDAO pd = new PatientDAO();
         UserAccountDAO uad = new UserAccountDAO();
         SlotDAO sd = new SlotDAO();
- //       Appointment a = new Appointment(pd.getPatientsById(1), uad.getUserAccountById(1), "2023-07-12", "dau dit", sd.getSlotById(7), "new", false, false, false);
+        //       Appointment a = new Appointment(pd.getPatientsById(1), uad.getUserAccountById(1), "2023-07-12", "dau dit", sd.getSlotById(7), "new", false, false, false);
         //  ad.createAnAppointment(a);
-   //     ArrayList<Appointment> ls = ad.getAppointmnetByPatient(pd.getPatientsById(5));
+        //     ArrayList<Appointment> ls = ad.getAppointmnetByPatient(pd.getPatientsById(5));
 //        for (Appointment l : ls) {
 //            System.out.println(l.getSymptom());
 //        }
-       // System.out.println(ls);
+        // System.out.println(ls);
 //        int fee = ad.sumServiceFee("month");
 //        System.out.println(fee);
         AppointmentDAO dao = new AppointmentDAO();
@@ -790,7 +794,7 @@ public class AppointmentDAO extends DBContext {
         for (Statistic l : ls) {
             System.out.println(l.getCount());
         }
-        
+
         System.out.println();
     }
 }

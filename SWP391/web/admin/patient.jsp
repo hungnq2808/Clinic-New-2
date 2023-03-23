@@ -19,12 +19,11 @@
                             <div class="col-md-11 row">
                                 <div class="col-md-4">
                                     <h5 class="mb-0">Patients</h5>
-                                    <h6>${requestScope.success}</h6>
                                 </div>
                                 <div class="col-md-7">
                                     <div class="search-bar p-0 d-lg-block ms-2">                                                        
                                         <div id="search" class="menu-search mb-0">
-                                            <form action="patientmanage?action=search" method="POST" id="searchform" class="searchform">
+                                            <form action="patient?action=search" method="POST" id="searchform" class="searchform">
                                                 <div>
                                                     <input type="text" class="form-control border rounded-pill" name="search" id="s" placeholder="Tìm kiếm Bệnh nhân...">
                                                     <input type="submit" id="searchsubmit" value="Search">
@@ -53,30 +52,23 @@
                                                 <th class="border-bottom p-3" >Họ tên</th>
                                                 <th class="border-bottom p-3" >Giới tính</th>
                                                 <th class="border-bottom p-3" >Ngày sinh</th>
-                                                <th class="border-bottom p-3" >Trạng thái</th>
                                                 <th class="border-bottom p-3" ></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <c:forEach items="${patientDetails}" var="a">
+                                            <c:forEach items="${list}" var="a">
                                                 <tr>
-                                                    <th class="p-3">${a.patient_id}</th>
-                                                    <td class="p-3">${a.account.name}</td>
-                                                    <c:if test="${a.account.gender == true}">
+                                                    <th class="p-3">${a.id}</th>
+                                                    <td class="p-3">${a.patientName}</td>
+                                                    <c:if test="${a.patientGender == true}">
                                                         <td class="p-3">Nam</td>
                                                     </c:if>
-                                                    <c:if test="${a.account.gender == false}">
+                                                    <c:if test="${a.patientGender == false}">
                                                         <td class="p-3">Nữ</td>
                                                     </c:if>
-                                                    <td class="p-3"><fmt:formatDate pattern="dd/MM/yyyy" value="${a.DOB}" /></td>
-                                                    <c:if test="${a.status == true}">
-                                                        <td class="p-3">Active</td>
-                                                    </c:if>
-                                                    <c:if test="${a.status == false}">
-                                                        <td class="p-3">Disable</td>
-                                                    </c:if>
+                                                    <td class="p-3"><fmt:formatDate pattern="dd/MM/yyyy" value="${a.patientDob}" /></td>                                                    
                                                     <td class="text-end p-3">
-                                                        <a href="patientmanage?action=detail&username=${a.account.username}" type="button"class="btn btn-info">Chi tiết</a>
+                                                        <a href="patientmanage?action=detail&id=${a.id}" type="button"class="btn btn-info">Chi tiết</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -98,87 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <c:forEach items="${account}" var="a">
-                        <div class="modal fade" id="edit${a.username}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header border-bottom p-3">
-                                        <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body p-3 pt-4">
-                                        <form action="account?action=update" method="POST" onSubmit="document.getElementById('submit').disabled=true;">
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Tên người dùng</label>
-                                                        <input value="${a.username}" readonly name="username" id="name" type="text" class="form-control">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Quyền <span class="text-danger">*</span></label>
-                                                        <select name="role_id" class="form-select" aria-label="Default select example">
-                                                            <c:forEach items="${role}" var="r">
-                                                                <option <c:if test="${a.role.name == r.name}">selected</c:if> value="${r.role_id}">${r.name}</option>
-                                                            </c:forEach>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label class="form-label">Trạng thái <span class="text-danger">*</span></label>
-                                                    <select name="status" class="form-select" aria-label="Default select example">
-                                                        <option <c:if test="${a.status == true}">selected</c:if> value="true">Active</option>
-                                                        <option <c:if test="${a.status == false}">selected</c:if> value="false">Disable</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-12">
-                                                    <div class="d-grid">
-                                                        <button type="submit" id="submit" class="btn btn-primary">Chỉnh sửa</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                    </c:forEach>
-
-                    <div class="modal fade" id="filter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header border-bottom p-3">
-                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body p-3 pt-4">
-                                    <form action="account?action=filter" method="POST" onSubmit="document.getElementById('submit').disabled=true;">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <div class="mb-3">
-                                                    <label class="form-label">Quyền <span class="text-danger">*</span></label>
-                                                    <select name="role_id" class="form-select" aria-label="Default select example">
-                                                        <option selected value="all">Tất cả</option>
-                                                        <c:forEach items="${role}" var="r">
-                                                            <option value="${r.role_id}">${r.name}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Trạng thái <span class="text-danger">*</span></label>
-                                                <select name="status" class="form-select" aria-label="Default select example">
-                                                    <option selected value="all">Tất cả</option>
-                                                    <option value="1">Active</option>
-                                                    <option value="0">Disable</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <jsp:include page="../admin/layout/footer.jsp"/>
             </main>

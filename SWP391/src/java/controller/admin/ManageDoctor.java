@@ -114,7 +114,7 @@ public class ManageDoctor extends HttpServlet {
                 String enpassword = EncodeData.enCode(password);
                 boolean gender = Boolean.parseBoolean(rgender);
                 String fullname = Validate.capitalizeFirstLetter(name);
-                if (doctordao.isExist(email)) {
+                if (doctordao.isExist(email, phone)) {
                     doctorlist = doctordao.getAllDoctor();
                     request.setAttribute("doctorlist", doctorlist);
                     request.setAttribute("speciality", specialitylist);
