@@ -59,6 +59,43 @@ public class ServiceAppointmentDAO extends DBContext {
         return null;
     }
 
+    public ServiceAppointments getServiceAppointmentById(int id) {
+        String sql = "SELECT [id]\n"
+                + "      ,[appointments_id]\n"
+                + "      ,[service_id]\n"
+                + "  FROM [dbo].[service_appointments]\n"
+                + "  where id = ?";
+        AppointmentDAO ad = new AppointmentDAO();
+        ServiceDAO sd = new ServiceDAO();
+        ServiceAppointments sa;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                sa = new ServiceAppointments();
+                sa.setId(rs.getInt("id"));
+                sa.setAppointment(ad.getAppointmentByID(rs.getInt("appointments_id")));
+                sa.setService(sd.getServiceById(rs.getInt("service_id")));
+                return sa;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public void deleteServiceAppointmentById(int id) {
+        String sql = "DELETE FROM [dbo].[service_appointments]\n"
+                + "      WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public void deleteAllServiceAppointmentByAppointment(Appointment a) {
         String sql = "DELETE FROM [dbo].[service_appointments]\n"
                 + "      WHERE appointments_id = ?";
@@ -73,9 +110,10 @@ public class ServiceAppointmentDAO extends DBContext {
     public static void main(String[] args) {
         AppointmentDAO ad = new AppointmentDAO();
         ServiceAppointmentDAO sad = new ServiceAppointmentDAO();
-        ArrayList<ServiceAppointments> ls = sad.getAllServiceAppointmentByAppointment(ad.getAppointmentByID(2284022));
-        for (ServiceAppointments l : ls) {
-            System.out.println(l.getService().getPrice());
-        }
+//        ArrayList<ServiceAppointments> ls = sad.getAllServiceAppointmentByAppointment(ad.getAppointmentByID(2284022));
+//        for (ServiceAppointments l : ls) {
+//            System.out.println(l.getService().getPrice());
+//        }
+        System.out.println(sad.getServiceAppointmentById(20).getAppointment().getId());
     }
 }

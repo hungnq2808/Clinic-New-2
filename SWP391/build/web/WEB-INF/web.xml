@@ -104,6 +104,10 @@
         <servlet-name>AddMedicalHistory</servlet-name>
         <servlet-class>controller.admin.AddMedicalHistory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PatientDeleteServiceServlet</servlet-name>
+        <servlet-class>controller.PatientDeleteServiceServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>BookingAppointmentServlet</servlet-name>
         <url-pattern>/booking</url-pattern>
@@ -207,6 +211,10 @@
     <servlet-mapping>
         <servlet-name>AddMedicalHistory</servlet-name>
         <url-pattern>/addMedical</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PatientDeleteServiceServlet</servlet-name>
+        <url-pattern>/patientdeleteservice</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

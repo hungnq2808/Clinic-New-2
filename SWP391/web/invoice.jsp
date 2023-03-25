@@ -53,7 +53,7 @@
         <header id="topnav" class="defaultscroll sticky">
             <div class="container">
                 <!-- Logo container-->
-                <a class="logo" href="index.html">
+                <a class="logo" href="home">
                     <img src="${pageContext.request.contextPath}/assets/images/logo-dark.png" height="24" class="logo-light-mode" alt="">
                     <img src="${pageContext.request.contextPath}/assets/images/logo-light.png" height="24" class="logo-dark-mode" alt="">
                 </a>                
@@ -118,7 +118,7 @@
                         <li class="has-submenu parent-menu-item">
                             <a href="javascript:void(0)">Home</a><span class="menu-arrow"></span>
                             <ul class="submenu">
-                                <li><a href="index.html" class="sub-menu-item">Index One</a></li>
+                                <li><a href="home" class="sub-menu-item">Index One</a></li>
                                 <li><a href="index-two.html" class="sub-menu-item">Index Two</a></li>
                                 <li><a href="index-three.html" class="sub-menu-item">Index Three</a></li>
                             </ul>
@@ -173,7 +173,7 @@
                                 <li><a href="contact.html" class="sub-menu-item">Contact</a></li>
                             </ul>
                         </li>
-                        <li><a href="${pageContext.request.contextPath}/admin/index.html" class="sub-menu-item" target="_blank">Admin</a></li>
+                        <li><a href="home" class="sub-menu-item" target="_blank">Admin</a></li>
                     </ul><!--end navigation menu-->
                 </div><!--end navigation-->
             </div><!--end container-->
@@ -258,6 +258,7 @@
                                                         <th scope="col" class="text-start border-bottom p-3" style="min-width: 220px;">Item</th>
                                                         <th scope="col" class="border-bottom p-3" style="min-width: 130px;">Rate</th>
                                                         <th scope="col" class="border-bottom p-3" style="min-width: 130px;">Total</th>
+                                                        <th scope="col" class="border-bottom p-3" style="min-width: 130px;">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -268,7 +269,7 @@
                                                             <td class="text-start p-3">${l.getService().getName()}</td>
                                                             <td class="p-3">${l.getService().getPrice()}</td>
                                                             <td class="p-3">${l.getService().getPrice()}</td>
-
+                                                            <td class="p-3"><a class="btn btn-soft-primary" href="patientdeleteservice?said=${l.getId()}">Delete</a></td>
                                                         </tr>
                                                     </c:forEach>
                                                 </tbody>
@@ -389,7 +390,7 @@
                     <div class="row align-items-center">
                         <div class="col-sm-6">
                             <div class="text-sm-start text-center">
-                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="${pageContext.request.contextPath}/${pageContext.request.contextPath}/index.html" target="_blank" class="text-reset">Shreethemes</a>.</p>
+                                <p class="mb-0"><script>document.write(new Date().getFullYear())</script> © Doctris. Design with <i class="mdi mdi-heart text-danger"></i> by <a href="home" target="_blank" class="text-reset">Shreethemes</a>.</p>
                             </div>
                         </div><!--end col-->
 
@@ -474,7 +475,7 @@
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-ltr-version t-ltr-dark" onclick="setTheme('style-dark')"><img src="${pageContext.request.contextPath}/assets/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">LTR Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="dark-version t-dark mt-4" onclick="setTheme('style-dark')"><img src="${pageContext.request.contextPath}/assets/images/layouts/landing-dark.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Dark Version</span></a></li>
                                     <li class="d-grid"><a href="javascript:void(0)" class="light-version t-light mt-4" onclick="setTheme('style')"><img src="${pageContext.request.contextPath}/assets/images/layouts/landing-light.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Light Version</span></a></li>
-                                    <li class="d-grid"><a href="${pageContext.request.contextPath}/admin/index.html" target="_blank" class="mt-4"><img src="${pageContext.request.contextPath}/assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
+                                    <li class="d-grid"><a href="home" target="_blank" class="mt-4"><img src="${pageContext.request.contextPath}/assets/images/layouts/light-dash.png" class="img-fluid rounded-md shadow-md d-block" alt=""><span class="text-muted mt-2 d-block">Admin Dashboard</span></a></li>
                                 </ul>
                             </div>
                         </div>
@@ -491,7 +492,7 @@
                     <li class="list-inline-item mb-0"><a href="https://www.instagram.com/shreethemes/" target="_blank" class="rounded"><i class="uil uil-instagram align-middle" title="instagram"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="https://twitter.com/shreethemes" target="_blank" class="rounded"><i class="uil uil-twitter align-middle" title="twitter"></i></a></li>
                     <li class="list-inline-item mb-0"><a href="mailto:support@shreethemes.in" class="rounded"><i class="uil uil-envelope align-middle" title="email"></i></a></li>
-                    <li class="list-inline-item mb-0"><a href="${pageContext.request.contextPath}/index.html" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
+                    <li class="list-inline-item mb-0"><a href="home" target="_blank" class="rounded"><i class="uil uil-globe align-middle" title="website"></i></a></li>
                 </ul><!--end icon-->
             </div>
         </div>

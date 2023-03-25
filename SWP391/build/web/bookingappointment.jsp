@@ -190,9 +190,9 @@
                                   
                                 </li><!--end nav item-->
                             </ul>
-    
+                            <h3 class="text-center text-danger">${requestScope.mess}</h3>   
                                 <div class="tab-pane fade show active" id="pills-online" role="tabpanel" aria-labelledby="online-booking">
-                                    <form action="bookingappointment" method="get">
+                                    <form action="booking" method="post">
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="mb-3">
