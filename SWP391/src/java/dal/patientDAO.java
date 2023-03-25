@@ -5,9 +5,11 @@
 package dal;
 
 import context.DBContext;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -190,7 +192,7 @@ public class PatientDAO extends DBContext {
         return null;
     }
 
-    public void updatePatient(Patient p) {
+    public boolean updatePatient(Patient p) {
         String sql = "UPDATE [dbo].[patients]\n"
                 + "   SET [patient_name] = ?\n"
                 + "      ,[patient_phone_number] = ?\n"
@@ -209,8 +211,12 @@ public class PatientDAO extends DBContext {
             st.setDate(6, p.getPatientDob());
             st.setInt(7, p.getId());
             st.executeUpdate();
-        } catch (SQLException e) {
+            return true;
+        } catch (SQLException ex) {
+            Logger.getLogger(PatientDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
+        
     }
 
     public void deletePatientsById(int id) {
@@ -233,11 +239,9 @@ public class PatientDAO extends DBContext {
         return arr;
     }
 
-    public static void main(String[] args) {
-        PatientDAO pd = new PatientDAO();
-//        Patient p = new Patient("quang anh", "0971623121", "quanganh@gmail.com", true, "ajshdqw", "2002-8-13");
-//        pdd.createPatientsDetails(p);
-        //   Patient pp = pdd.getPatientsDetailsByOtherFeature("quang anh", "0971623121", "quanganh@gmail.com");
-        System.out.println(pd.getPatientsDetailsByOtherFeature("quang anh", "0971623121", "quanganh@gmail.com").getId());
-    }
+//    public static void main(String[] args) {
+//        PatientDAO pd = new PatientDAO();
+//        Patient p = new Patient(1,"Anh Quan", "0828065014", "quan@gmail.com", true, "ajshdqw", Date.valueOf("2002-8-13"));
+//        pd.updatePatient(p);
+//    }
 }

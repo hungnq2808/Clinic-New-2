@@ -24,6 +24,12 @@ public class Service {
         this.status = status;
     }
 
+    public Service(String name, int price, boolean status) {
+        this.name = name;
+        this.price = price;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

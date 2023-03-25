@@ -32,28 +32,6 @@
                                     </div> 
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <form action="servicemanage?action=filter" method="POST" onSubmit="document.getElementById('submit').disabled = true;">
-                                    <div class="justify-content-md-end row">
-                                        <div class="col-md-10 row align-items-center">
-                                            <div class="col-md-4">
-                                                <label class="form-label">Chuyên môn</label>
-                                            </div>
-                                            <div class="col-md-7">
-                                                <select name="category" class="form-select">
-                                                    <option <c:if test="${category1 == 'all'}"> selected </c:if> value="all">Tất cả</option>
-                                                    <c:forEach items="${category}" var="s">
-                                                        <option <c:if test="${category1 == s.id}"> selected </c:if> value="${s.id}">${s.name}</option>
-                                                    </c:forEach>
-                                                </select>  
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-primary">Lọc</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                             <div class="col-md-2">
                                 <a href="servicemanage?action=add"><button class="btn btn-primary">Thêm mới</button></a>
                             </div>
@@ -67,19 +45,18 @@
                                             <tr>
                                                 <th class="border-bottom p-3" >ID</th>
                                                 <th class="border-bottom p-3" >Tên dịch vụ</th>
-                                                <th class="border-bottom p-3" >Thể loại</th>
                                                 <th class="border-bottom p-3" >Phí</th>
                                                 <th class="border-bottom p-3" >Trạng thái</th>
                                                 <th class="border-bottom p-3 text-center" >Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <c:forEach items="${service}" var="s">
                                                 <tr>
-                                                    <td class="p-3" ondblclick="window.location.href = 'servicemanage?action=viewfeedback&id=${s.service_id}'" >${s.service_id}</td>
-                                                    <td class="p-3" ondblclick="window.location.href = 'servicemanage?action=viewfeedback&id=${s.service_id}'" >${s.title}</td>
-                                                    <td class="p-3">${s.setting.name}</td>
-                                                    <td class="p-3"><fmt:formatNumber pattern="#,###,###,###" value="${s.fee}"/> đ</td>
+                                                    <td class="p-3" name="id" >${s.id}</td>
+                                                    <td class="p-3">${s.name}</td>
+                                                    <td class="p-3"><fmt:formatNumber pattern="#,###,###,###" value="${s.price}"/> đ</td>
                                                     <c:if test="${s.status == true}">
                                                         <td class="p-3">Active</td>
                                                     </c:if>
@@ -88,12 +65,12 @@
                                                     </c:if>
                                                     <td class=" text-center p-3">
                                                         <c:if test="${s.status == true}">
-                                                            <button class="btn btn-info disable" type="button" style="width: 140px" value="${s.service_id}">Deactivate</button>
+                                                            <button class="btn btn-info disable" type="button" style="width: 140px" value="${s.id}">Deactivate</button>
                                                         </c:if>
                                                         <c:if test="${s.status == false}">
-                                                            <button class="btn btn-info active" type="button" style="width: 140px" value="${s.service_id}">Active</button>
+                                                            <button class="btn btn-info active" type="button" style="width: 140px" value="${s.id}">Active</button>
                                                         </c:if>
-                                                        <a href="servicemanage?action=detail&id=${s.service_id}" type="button"class="btn btn-info">Chi tiết</a>
+                                                        <a href="servicemanage?action=detail&id=${s.id}" type="button"class="btn btn-info">Chi tiết</a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>
@@ -133,37 +110,37 @@
         <script src="assets/js/app.js"></script>
         <script src="assets/js/sweetalert.min.js"></script>
         <script>
-                                                        $(document).ready(jQuery(function () {
-                                                            jQuery(".disable").click(function () {
-                                                                swal({
-                                                                    title: "Cảnh báo",
-                                                                    text: "Bạn có chắc chắn muốn khóa dịch vụ này?",
-                                                                    buttons: ["Hủy bỏ", "Đồng ý"],
-                                                                })
-                                                                        .then((willDelete) => {
-                                                                            if (willDelete) {
-                                                                                window.location = "servicemanage?action=update_status&id=" + $(this).attr("value") + "&status=false";
-                                                                                swal("Đã khóa thành công.!", {
-                                                                                });
-                                                                            }
-                                                                        });
-                                                            });
+            $(document).ready(jQuery(function () {
+                jQuery(".disable").click(function () {
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn muốn khóa dịch vụ này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    window.location = "servicemanage?action=update_status&id=" + $(this).attr("value") + "&status=false";
+                                    swal("Đã khóa thành công.!", {
+                                    });
+                                }
+                            });
+                });
 
-                                                            jQuery(".active").click(function () {
-                                                                swal({
-                                                                    title: "Cảnh báo",
-                                                                    text: "Bạn có chắc chắn muốn kích hoạt dịch vụ này?",
-                                                                    buttons: ["Hủy bỏ", "Đồng ý"],
-                                                                })
-                                                                        .then((willDelete) => {
-                                                                            if (willDelete) {
-                                                                                window.location = "servicemanage?action=update_status&id=" + $(this).attr("value") + "&status=true";
-                                                                                swal("Đã kích hoạt thành công.!", {
-                                                                                });
-                                                                            }
-                                                                        });
-                                                            });
-                                                        }));
+                jQuery(".active").click(function () {
+                    swal({
+                        title: "Cảnh báo",
+                        text: "Bạn có chắc chắn muốn kích hoạt dịch vụ này?",
+                        buttons: ["Hủy bỏ", "Đồng ý"],
+                    })
+                            .then((willDelete) => {
+                                if (willDelete) {
+                                    window.location = "servicemanage?action=update_status&id=" + $(this).attr("value") + "&status=true";
+                                    swal("Đã kích hoạt thành công.!", {
+                                    });
+                                }
+                            });
+                });
+            }));
         </script>
 
     </body>

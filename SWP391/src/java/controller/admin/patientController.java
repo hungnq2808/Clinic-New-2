@@ -49,13 +49,13 @@ public class patientController extends HttpServlet {
                 url = "patient?action=all";
                 patientlist = patientdao.getAllPatient();
             }
-            
+
             if (action.equals("search")) {
                 String search = request.getParameter("search");
-                url = "patient?action=search&search="+search;
+                url = "patient?action=search&search=" + search;
                 patientlist = patientdao.searchByName(search);
             }
-         
+
             if (action.equals("detail")) {
                 int pid = Integer.parseInt(request.getParameter("pid"));
                 Patient patient = patientdao.getPatientById(pid);
@@ -64,21 +64,30 @@ public class patientController extends HttpServlet {
             }
 
             if (action.equals("update_patient")) {
-                int pid = Integer.parseInt(request.getParameter("patient_id"));
-                String phone =request.getParameter("phone");
+                int pid = Integer.parseInt(request.getParameter("pid"));
+                String phone = request.getParameter("phone");
                 String name = request.getParameter("name");
                 String email = request.getParameter("email");
                 String address = request.getParameter("address");
                 boolean gender = Boolean.parseBoolean(request.getParameter("gender"));
                 Date dob = Date.valueOf(request.getParameter("DOB"));
-                patientdao.updatePatient(new Patient(pid,name, phone, email, gender,address, dob));
-                alert = "success";
-                message = "Cập nhật thôn tin thành công";
-                request.setAttribute("alert", alert);
-                request.setAttribute("message", message);
-                request.getRequestDispatcher("patient?action=detail&pid=" + pid).forward(request, response);
+                Patient p = new Patient(pid, name, phone, email, gender, address, dob);
+                boolean check = patientdao.updatePatient(p);
+                if (check==true) {
+                    alert = "success";
+                    message = "Cập nhật thông tin thành công";
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("patient?action=all").forward(request, response);
+                } else {
+                    alert = "failed";
+                    message = "Cập nhật thông tin thất bại";
+                    request.setAttribute("alert", alert);
+                    request.setAttribute("message", message);
+                    request.getRequestDispatcher("patient?action=detail&pid="+pid).forward(request, response);
+                }
             }
-            
+
             if (patientlist != null) {
                 int page, numperpage = 8;
                 int size = patientlist.size();
