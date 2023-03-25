@@ -90,7 +90,8 @@ public class AppointmentDAO extends DBContext {
             st.setBoolean(9, a.isIsDenided());
             st.executeUpdate();
             return true;
-        } catch (SQLException e) {
+        } catch (SQLException ex) {
+            Logger.getLogger(AppointmentDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }

@@ -36,7 +36,26 @@ public class medicalHistory extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String pid_raw = request.getParameter("pid");
+        int pid;
 
+        try {
+            pid = Integer.parseInt(pid_raw);
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html; charset=UTF-8");
+            Medical_historyDAO mhDao = new Medical_historyDAO();
+
+            //p = pDao.getPatientByID(mh.getPatient_id().getId());
+            ArrayList<Medical_history> lmh = mhDao.getMedicalHistoryByPa(pid);
+            //ArrayList<Medical_history> lmh = mhDao.getMedicalHistory();
+
+            request.setAttribute("list", lmh);
+
+            request.getRequestDispatcher("medicalHistory.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(medicalHistory.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -51,31 +70,8 @@ public class medicalHistory extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String pid_raw = request.getParameter("pid");
-        int pid;
+        processRequest(request, response);
 
-        try {
-            pid = Integer.parseInt(pid_raw);
-            request.setCharacterEncoding("UTF-8");
-            response.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html; charset=UTF-8");
-            Medical_historyDAO mhDao = new Medical_historyDAO();
-            
-            
-            //p = pDao.getPatientByID(mh.getPatient_id().getId());
-            ArrayList<Medical_history> lmh = mhDao.getMedicalHistoryByPa(pid);
-          //ArrayList<Medical_history> lmh = mhDao.getMedicalHistory();
-
-            
-            request.setAttribute("list", lmh);
-
-            request.getRequestDispatcher("medicalHistory.jsp").forward(request, response);
-        } catch (Exception ex) {
-            Logger.getLogger(medicalHistory.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        response.sendRedirect("appoinmentDoctor");
     }
 
     /**

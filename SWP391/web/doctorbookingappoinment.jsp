@@ -186,7 +186,9 @@
 
                                     <div class="text-center pt-1 pb-1">
                                         <h4 class="title fw-normal mb-0">Online Appointment</h4>
+                                        <h1>${pid}</h1>
                                     </div>
+                                   
 
                                 </li><!--end nav item-->
                             </ul>
@@ -195,34 +197,6 @@
                                 <form action="doctorbooking" method="post">
                                     <div class="row">
                                         <div class="col-lg-12">
-                                            <div class="mb-3">
-                                                <label for="">
-                                                    List patients: <select name="paId">
-                                                        <option value="0">Choose patient</option>
-                                                        <c:forEach items="${requestScope.list}" var="l">
-
-                                                            <option value="${l.id}">${l.patientName}</option>
-                                                        </c:forEach>
-                                                    </select><br/>
-                                                </label>
-                                            </div>
-                                        </div><!--end col-->
-
-                                        <div class="col-md-12">
-                                            <div class="mb-6">
-                                                <label class="form-label">Doctor</label>
-                                                <select class="form-control doctor-name select2input" name="doctorid">
-                                                    <c:forEach items="${requestScope.lsUA}" var="u">
-                                                        <option value="${u.getId()}"> ${u.getName()} -- Bac si ${u.getSpecialization().getName()} </option>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div><!--end col-->
-
-
-
-
-
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label"> Date : </label>
@@ -252,7 +226,7 @@
                                             <div class="d-grid">
                                                 <button type="submit" class="btn btn-primary">Book An Appointment</button>
                                             </div>
-                                            
+                                            </div>   
                                         </div><!--end col-->
                                     </div><!--end row-->
                                 </form>

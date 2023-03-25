@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import model.Appointment;
+import model.Service;
 import model.ServiceAppointments;
 
 /**
@@ -107,6 +108,19 @@ public class ServiceAppointmentDAO extends DBContext {
         }
     }
 
+    public void addServiceForAppoinment(Appointment a, Service se) {
+        String sql = "INSERT INTO [dbo].[service_appointments]\n"
+                + "           ([appointments_id]\n"
+                + "           ,[service_id])\n"
+                + "     VALUES (?,?)";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, a.getId());
+            st.setInt(2,se.getId());
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     public static void main(String[] args) {
         AppointmentDAO ad = new AppointmentDAO();
         ServiceAppointmentDAO sad = new ServiceAppointmentDAO();

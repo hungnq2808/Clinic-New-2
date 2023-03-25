@@ -60,6 +60,7 @@
         <table class="table">
             <thead class="thead-light">
                 <tr>
+                    <th>ID</th>
                     <th>Bệnh nhân</th>
                     <th>Bệnh</th>
                     <th>Ngày</th>
@@ -71,6 +72,7 @@
             <tbody>
                 <c:forEach items="${requestScope.list}" var="a">
                     <tr>
+                        <th>${a.getId()}</th>
                         <th>${a.getPatient_id().getPatientName()}</th>
                         <th>${a.getDisease()}</th>
                         <th>${a.getDate()}</th>
@@ -84,25 +86,12 @@
                             </c:if>
                         </th>
                         <th>
-                            <button type = "submit" class="btn btn-primary small" onclick="update('${a.getPatient_id().getId()}')">Sửa bệnh án</button>
-                            <script type="text/javascript">
-                                function update(id) {
-
-                                    window.location = "updatemedical?pid=" + id;
-
-                                }
-                            </script>
+                            <a href="updatemedical?mhid=${a.id}" class="btn btn-primary">Sửa bệnh án</a>
+                            
                         </th>
                         <th>
+                            <a href="doctorbooking?paId=${a.patient_id.id}" class="btn btn-primary">Hẹn tái khám</a>
                             
-                            <button type = "submit" class="btn btn-primary small" onclick="cancle('${a.getPatient_id().getId()}')">Hẹn tái khám</button>
-                            <script type="text/javascript">
-                                function cancle(id) {
-
-                                    window.location = "doctorbooking?paId=" + id;
-
-                                }
-                            </script>
                             
                         </th>
 

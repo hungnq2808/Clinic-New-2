@@ -89,7 +89,7 @@ public class LoginServlet extends HttpServlet {
             AccountPermisionDAO apd = new AccountPermisionDAO();
             AccountPermision ap = apd.getAccountPermisionByAccount(ua);
             
-            if(ap.getPer().getPermision().equalsIgnoreCase("Admin")){
+            if(ap.getPer().getPermision().equalsIgnoreCase("Admin")||ap.getPer().getPermision().equalsIgnoreCase("Manager")){
                 request.getRequestDispatcher("dashboard?action=default").forward(request, response);
             }
             if(ap.getPer().getPermision().equalsIgnoreCase("Doctor")){

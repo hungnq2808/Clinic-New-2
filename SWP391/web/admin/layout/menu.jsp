@@ -20,7 +20,7 @@
                 <li><a href="doctormanage?action=all"><i class="uil uil-user me-2 d-inline-block"></i>Quản lý Bác sĩ</a></li>
                 <li><a href="patient?action=all"><i class="uil uil-user me-2 d-inline-block"></i>Quản lý Bệnh nhân</a></li>
                 <li><a href="servicemanage?action=all"><i class="uil uil-apps me-2 d-inline-block"></i>Quản lý Dịch vụ</a></li>
-                <li><a href="appointmentmanage?action=all"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Quản lý lịch hẹn</a></li>
+                <li><a href="appointmentlist"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Quản lý lịch hẹn</a></li>
                 <li><a href="reservationmanage?action=all"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Quản lý đặt lịch dịch vụ</a></li>
 
         </ul>

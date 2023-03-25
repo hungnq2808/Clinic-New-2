@@ -117,7 +117,7 @@ public class AddMedicalHistory extends HttpServlet {
 //            String mess = "sucess";
 //            request.setAttribute("mess", mess);
 //            request.getRequestDispatcher("addMedical.jsp").forward(request, response);
-            boolean reexam = reexam_medical_raw.compareToIgnoreCase("") == 0 ? true : false;
+            boolean reexam = Boolean.parseBoolean(reexam_medical_raw);
 
 //            String mess = "sucess";
 //            request.setAttribute("mess", mess);

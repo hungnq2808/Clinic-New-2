@@ -60,14 +60,14 @@ public class Medical_historyDAO extends DBContext {
                 + "      ,[note] = ?\n"
                 //+ "      ,[patient_id] = ?\n"
                 + "      ,[reexam_medical] = ?\n"
-                + " WHERE patient_id= ?";
+                + " WHERE id= ?";
         try {
             ps = connection.prepareStatement(sql);
             ps.setString(1, mh.getDisease());
             ps.setString(2, mh.getDate());
             ps.setString(3, mh.getNote());
             ps.setBoolean(4, mh.isReexam_medical());
-            ps.setInt(5, mh.getPatient_id().getId());
+            ps.setInt(5, mh.getId());
             // st.setInt(6, mh.getId());
 
             ps.executeUpdate();

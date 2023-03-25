@@ -98,6 +98,7 @@ public class UpdateMedicalHistory extends HttpServlet {
 //        }
 
         //String id_raw = request.getParameter("mhid");
+        int mhid = Integer.parseInt(request.getParameter("mhid"));
         String disease = request.getParameter("disease");
         String date = request.getParameter("date");
         String note = request.getParameter("note");
@@ -112,8 +113,8 @@ public class UpdateMedicalHistory extends HttpServlet {
             //id = Integer.parseInt(id_raw);
             pid = Integer.parseInt(patient_id_raw);
 
-            boolean reexam = reexam_medical_raw.compareToIgnoreCase("") == 0 ? true : false;
-            Medical_history m = new Medical_history(disease, date, note, pDao.getPatientById(pid), reexam);
+            boolean reexam = Boolean.parseBoolean(reexam_medical_raw);
+            Medical_history m = new Medical_history(mhid,disease, date, note, pDao.getPatientById(pid), reexam);
 
             //Medical_history m = mh.getMedicalByID(pid);
             
