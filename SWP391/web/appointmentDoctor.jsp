@@ -34,7 +34,7 @@
     <body>
         <jsp:include page="layout/preloader.jsp"/>
 
-        <jsp:include page="layout/menu.jsp"/>
+
 
         <div class="page-wrapper doctris-theme toggled">
             <nav id="sidebar" class="sidebar-wrapper">
@@ -46,99 +46,7 @@
                         </a>
                     </div>
 
-                    <ul class="sidebar-menu pt-3">
-                        <li><a href="index.html"><i class="uil uil-dashboard me-2 d-inline-block"></i>Dashboard</a></li>
-                        <li><a href="appointment.html"><i class="uil uil-stethoscope me-2 d-inline-block"></i>Appointment</a></li>
 
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-user me-2 d-inline-block"></i>Doctors</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="doctors.html">Doctors</a></li>
-                                    <li><a href="add-doctor.html">Add Doctor</a></li>
-                                    <li><a href="dr-profile.html">Profile</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-wheelchair me-2 d-inline-block"></i>Patients</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="patients.html">All Patients</a></li>
-                                    <li><a href="add-patient.html">Add Patients</a></li>
-                                    <li><a href="patient-profile.html">Profile</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-apps me-2 d-inline-block"></i>Apps</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="chat.html">Chat</a></li>
-                                    <li><a href="email.html">Email</a></li>
-                                    <li><a href="calendar.html">Calendar</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-shopping-cart me-2 d-inline-block"></i>Pharmacy</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="shop.html">Shop</a></li>
-                                    <li><a href="product-detail.html">Shop Detail</a></li>
-                                    <li><a href="shopcart.html">Shopcart</a></li>
-                                    <li><a href="checkout.html">Checkout</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-flip-h me-2 d-inline-block"></i>Blogs</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="blogs.html">Blogs</a></li>
-                                    <li><a href="blog-detail.html">Blog Detail</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-file me-2 d-inline-block"></i>Pages</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="faqs.html">FAQs</a></li>
-                                    <li><a href="review.html">Reviews</a></li>
-                                    <li><a href="invoice-list.html">Invoice List</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="terms.html">Terms & Policy</a></li>
-                                    <li><a href="privacy.html">Privacy Policy</a></li>
-                                    <li><a href="error.html">404 !</a></li>
-                                    <li><a href="blank-page.html">Blank Page</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li class="sidebar-dropdown">
-                            <a href="javascript:void(0)"><i class="uil uil-sign-in-alt me-2 d-inline-block"></i>Authentication</a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li><a href="login.html">Login</a></li>
-                                    <li><a href="signup.html">Signup</a></li>
-                                    <li><a href="forgot-password.html">Forgot Password</a></li>
-                                    <li><a href="lock-screen.html">Lock Screen</a></li>
-                                    <li><a href="thankyou.html">Thank you${pageContext.request.contextPath}.!</a></li>
-                                </ul>
-                            </div>
-                        </li>
-
-                        <li><a href="components.html"><i class="uil uil-cube me-2 d-inline-block"></i>Components</a></li>
-
-                        <li><a href="${pageContext.request.contextPath}/landing/index-two.html" target="_blank"><i class="uil uil-window me-2 d-inline-block"></i>Landing page</a></li>
-                    </ul>
-                    <!-- sidebar-menu  -->
                 </div>
                 <!-- sidebar-content  -->
                 <ul class="sidebar-footer list-unstyled mb-0">
@@ -154,7 +62,7 @@
             <!-- Start Page Content -->
             <main class="page-content bg-light">
 
-
+                <jsp:include page="admin/layout/headmenu.jsp"/>
 
                 <div class="container-fluid">
                     <div class="layout-specing">
@@ -190,7 +98,7 @@
                                                 <th>Status</th>
                                                 <th>Action</th>
                                                 <th></th>
-                                                
+
 
                                             </tr>
                                         </thead>
@@ -201,10 +109,10 @@
 
                                                 <tr>
                                                     <td><a href="medicalHistory?pid=${l.getPd().getId()}">${l.getPd().getPatientName()}</a></td>
-                                                    
-                                                    
-                                                    
-                                                    
+
+
+
+
 
 
                                                     <td>${l.ua.name}</td> 
@@ -226,14 +134,14 @@
 
                                                         <a type = "submit" class="btn btn-primary small" href="updateStatusDoctorT?appid=${l.getId()}&email=${l.getPd().getPatientEmail()}&code=${l.getClinicCode()}">Duyệt đơn</a>
                                                         <script type="text/javascript">
-                                                            function changeDoctor(id,email,code) {
+                                                            function changeDoctor(id, email, code) {
 
-                                                                window.location = "updateStatusDoctorT?appid=" + id +"&email =" +email +"&code="code;
+                                                                window.location = "updateStatusDoctorT?appid=" + id + "&email =" + email + "&code="code;
 
                                                             }
                                                         </script>
                                                     </td>
-                                                    
+
                                                     <td>
                                                         <button type = "submit" class="btn btn-primary small" onclick="create('${l.getPd().getId()}')">Tạo bệnh án</button>
                                                         <script type="text/javascript">
@@ -243,8 +151,8 @@
 
                                                             }
                                                         </script>
-                                                        
-                                                        
+
+
 
 
 

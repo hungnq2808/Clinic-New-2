@@ -3,15 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/dal/PatientDAO.java</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/dal/ServiceDAO.java</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/ManageService.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/PatientDeleteServiceServlet.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/UpdateMedicalHistory.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/AddMedicalHistory.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/medicalHistory.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/dal/AppointmentDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/Doctorbooking.java</file>
             <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/bookingappointment.jsp</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/admin/account.jsp</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/admin/doctor.jsp</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/patientController.java</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/index.jsp</file>
-            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/admin/patientdetail.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/dal/ServiceAppointmentDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/LoginServlet.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/patientprofile.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/ManageAccount.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/appoinmentDoctor.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/invoice.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/addMedical.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/dal/Medical_historyDAO.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/admin/layout/menu.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/login.jsp</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/src/java/controller/admin/medicalHistory.java</file>
+            <file>file:/C:/Users/Admin/OneDrive/Desktop/Clinic-New-2/SWP391/web/doctorbookingappoinment.jsp</file>
         </group>
     </open-files>
 </project-private>

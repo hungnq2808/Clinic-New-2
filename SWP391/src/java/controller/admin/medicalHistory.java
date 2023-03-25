@@ -40,7 +40,7 @@ public class medicalHistory extends HttpServlet {
         int pid;
 
         try {
-            pid = Integer.parseInt(pid_raw);
+            pid = 1002;
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             response.setContentType("text/html; charset=UTF-8");

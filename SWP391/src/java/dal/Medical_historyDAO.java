@@ -179,6 +179,16 @@ public class Medical_historyDAO extends DBContext {
         return null;
     }
 
+    public void deleteAllMedicalHistoryByPatient(Patient p) {
+        String sql = "DELETE FROM [dbo].[medical_history]\n"
+                + "      WHERE patient_id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, p.getId());
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
     public static void main(String[] args) throws Exception {
         Medical_historyDAO mh = new Medical_historyDAO();
         PatientDAO pdaoAO = new PatientDAO();

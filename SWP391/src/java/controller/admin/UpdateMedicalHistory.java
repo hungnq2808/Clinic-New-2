@@ -35,18 +35,46 @@ public class UpdateMedicalHistory extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet UpdateMedical</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet UpdateMedical at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        Medical_historyDAO mh = new Medical_historyDAO();
+        PatientDAO pDao = new PatientDAO();
+        
+//        List<Patients> ls = new ArrayList<>();
+//        try {
+//            ls = pDao.getAllPatients();
+//            
+//            request.setAttribute("list", ls);
+//            request.getRequestDispatcher("addMedical.jsp").forward(request, response);
+//        } catch (Exception e) {
+//        }
+
+        //String id_raw = request.getParameter("mhid");
+        int mhid = 1;
+        String disease = request.getParameter("disease");
+        String date = request.getParameter("date");
+        String note = request.getParameter("note");       
+        String reexam_medical_raw = request.getParameter("reexam");
+
+
+        try {
+
+            //id = Integer.parseInt(id_raw);
+            Medical_history medical= mh.getMedicalByID(mhid);
+            
+            boolean reexam = Boolean.parseBoolean(reexam_medical_raw);
+            Medical_history m = new Medical_history(mhid,disease, date, note, medical.getPatient_id(), reexam);
+
+            //Medical_history m = mh.getMedicalByID(pid);
+            
+            mh.update(m);
+            
+
+            //request.getRequestDispatcher("UpdateMedicalHistory.jsp").forward(request, response);
+            
+            response.sendRedirect("medicalHistory?pid=1002");
+        } catch (Exception e) {
+
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -62,17 +90,7 @@ public class UpdateMedicalHistory extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //request.getRequestDispatcher("UpdateMedicalHistory.jsp").forward(request, response);
-        Medical_historyDAO mh = new Medical_historyDAO();
-        PatientDAO pDao = new PatientDAO();
-
-        List<Patient> ls = new ArrayList<>();
-        try {
-            ls = pDao.getAllPatient();
-
-            request.setAttribute("list", ls);
-            request.getRequestDispatcher("UpdateMedicalHistory.jsp").forward(request, response);
-        } catch (Exception e) {
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -86,47 +104,7 @@ public class UpdateMedicalHistory extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Medical_historyDAO mh = new Medical_historyDAO();
-        PatientDAO pDao = new PatientDAO();
-//        List<Patients> ls = new ArrayList<>();
-//        try {
-//            ls = pDao.getAllPatients();
-//            
-//            request.setAttribute("list", ls);
-//            request.getRequestDispatcher("addMedical.jsp").forward(request, response);
-//        } catch (Exception e) {
-//        }
-
-        //String id_raw = request.getParameter("mhid");
-        int mhid = Integer.parseInt(request.getParameter("mhid"));
-        String disease = request.getParameter("disease");
-        String date = request.getParameter("date");
-        String note = request.getParameter("note");
-        String patient_id_raw = request.getParameter("pid");
-        String reexam_medical_raw = request.getParameter("reexam");
-
-        int pid;
-        //int id;
-
-        try {
-
-            //id = Integer.parseInt(id_raw);
-            pid = Integer.parseInt(patient_id_raw);
-
-            boolean reexam = Boolean.parseBoolean(reexam_medical_raw);
-            Medical_history m = new Medical_history(mhid,disease, date, note, pDao.getPatientById(pid), reexam);
-
-            //Medical_history m = mh.getMedicalByID(pid);
-            
-            mh.update(m);
-            
-
-            //request.getRequestDispatcher("UpdateMedicalHistory.jsp").forward(request, response);
-            //response.sendRedirect("appointmentDoctor");
-            request.getRequestDispatcher("appoinmentDoctor").forward(request, response);
-        } catch (Exception e) {
-
-        }
+        processRequest(request, response);
         
         
     }

@@ -6,7 +6,7 @@
 package controller;
 
 import dal.AppointmentDAO;
-import dal.MedicalHistoryDAO;
+import dal.Medical_historyDAO;
 import dal.PatientDAO;
 import dal.ServiceAppointmentDAO;
 import java.io.IOException;
@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import model.Appointment;
+import model.Medical_history;
 import model.Patient;
 
 /**
@@ -65,7 +66,7 @@ public class DeletePatientServlet extends HttpServlet {
         Patient p = (Patient) session.getAttribute("patients");
         
         // delete medical using patients
-        MedicalHistoryDAO mhd = new MedicalHistoryDAO();
+        Medical_historyDAO mhd = new Medical_historyDAO();
         mhd.deleteAllMedicalHistoryByPatient(p);
         
         // delete service appointment using appointment get from patient

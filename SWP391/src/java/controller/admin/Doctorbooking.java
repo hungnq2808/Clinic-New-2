@@ -98,7 +98,7 @@ public class Doctorbooking extends HttpServlet {
         UserAccountDAO udao = new UserAccountDAO();
         SlotDAO sdao = new SlotDAO();
         AppointmentDAO adao = new AppointmentDAO();
-        String paId_raw = request.getParameter("paId");
+        String paId_raw = request.getParameter("pid");
         UserAccount ua = (UserAccount)session.getAttribute("account");
         
 
@@ -110,7 +110,7 @@ public class Doctorbooking extends HttpServlet {
         String code;
         code = adao.randomClinicCode(8);
         
-        paId = Integer.parseInt(paId_raw);
+        paId = 1002;
 
         
 
@@ -118,7 +118,7 @@ public class Doctorbooking extends HttpServlet {
 
         Appointment app = new Appointment(pdao.getPatientById(paId), ua, date, symptom, sdao.getSlotById(slotid), code, false, true, true);
         adao.createAnAppointment(app);
-        response.sendRedirect("home");
+        response.sendRedirect("appointmentDoctor.jsp");
 
     }
 

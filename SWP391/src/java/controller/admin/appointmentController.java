@@ -5,6 +5,7 @@
  */
 package controller.admin;
 
+import dal.AccountPermisionDAO;
 import dal.AppointmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +15,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.AccountPermision;
 import model.Appointment;
+import model.UserAccount;
 
 /**
  *
@@ -37,9 +41,15 @@ public class appointmentController extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; charset=UTF-8");
         AppointmentDAO dao = new AppointmentDAO();
-        
-        
-        ArrayList<Appointment> list = dao.getAllAppointment();
+        HttpSession session = request.getSession();
+        AccountPermisionDAO apdao = new AccountPermisionDAO();
+        UserAccount ua = (UserAccount)session.getAttribute("account");
+        if(ua==null){
+            response.sendRedirect("login");
+        }else if(!apdao.getAccountPermisionByAccount(ua).getPer().getPermision().equals("Doctor")){
+            response.sendRedirect("401.jsp");
+        }else{
+            ArrayList<Appointment> list = dao.getAllAppointment();
         ArrayList<Appointment> listdeni = dao.getAppointmentDenied(false);
         ArrayList<Appointment> lsser = dao.getAppointmentByService();
         
@@ -47,6 +57,9 @@ public class appointmentController extends HttpServlet {
         request.setAttribute("ls",listdeni);
         request.setAttribute("lsser",lsser);
         request.getRequestDispatcher("appointment.jsp").forward(request, response);
+        }
+        
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

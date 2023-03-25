@@ -45,7 +45,7 @@
             </style>
         </div>
 
-        
+
 
     </center>
 
@@ -86,13 +86,13 @@
                             </c:if>
                         </th>
                         <th>
-                            <a href="updatemedical?mhid=${a.id}" class="btn btn-primary">Sửa bệnh án</a>
-                            
+                            <a href="UpdateMedicalHistory.jsp?mhid=${a.id}" class="btn btn-primary">Sửa bệnh án</a>
+
                         </th>
                         <th>
-                            <a href="doctorbooking?paId=${a.patient_id.id}" class="btn btn-primary">Hẹn tái khám</a>
-                            
-                            
+                            <a href="doctorbooking?pid=${a.patient_id.id}" type="button" class="btn btn-primary">Hẹn tái khám</a>
+
+
                         </th>
 
                     </tr>
