@@ -2,56 +2,53 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
-import dal.SlotDAO;
-import dal.SpecializationDAO;
-import dal.UserAccountDAO;
+import dal.ServiceAppointmentDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Slot;
-import model.Specialization;
-import model.UserAccount;
+import model.ServiceAppointments;
 
 /**
  *
- * @author Quang Anh
+ * @author Admin
  */
-public class ListForBookingServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class PatientDeleteServiceServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ListForBookingServlet</title>");  
+            out.println("<title>Servlet PatientDeleteServiceServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ListForBookingServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet PatientDeleteServiceServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,19 +56,27 @@ public class ListForBookingServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        SpecializationDAO spd = new SpecializationDAO();
-        UserAccountDAO udd = new UserAccountDAO();
-        SlotDAO sd = new SlotDAO();
-        ArrayList<UserAccount> listUA = udd.getAllUserDetail();
-        ArrayList<Slot>  listSlot  = sd.getAllSlot();
-        request.setAttribute("lsUA", listUA);
-        request.setAttribute("lsS", listSlot);
-        request.getRequestDispatcher("bookingappointment.jsp").forward(request, response);
-    } 
+            throws ServletException, IOException {
+       String said_raw = request.getParameter("said");
+        int said,appid;
+        ServiceAppointmentDAO sad=  new ServiceAppointmentDAO();
+        try {
+            said = Integer.parseInt(said_raw);
+            ServiceAppointments sa = sad.getServiceAppointmentById(said);
+            appid = sa.getAppointment().getId();
+            sad.deleteServiceAppointmentById(said);
+          //  response.sendRedirect("getallserviceappointment?appid=" +appid);
+//            request.setAttribute("appid", appid);
+//            request.getRequestDispatcher("getallserviceappointment").forward(request, response);
+        request.getRequestDispatcher("getallserviceappointment?appid="+ appid).forward(request, response);
+        } catch (Exception e) {
+        }
+        
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -79,12 +84,13 @@ public class ListForBookingServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

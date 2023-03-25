@@ -134,7 +134,7 @@
                             </ul>
 
                             <div class="tab-pane fade show active" id="pills-online" role="tabpanel" aria-labelledby="online-booking">
-                                <form action="bookingappointment" method="post">
+                                <form action="booking" method="post">
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="mb-3">

@@ -31,7 +31,44 @@ public class ServiceAppointmentDAO extends DBContext {
         } catch (Exception e) {
         }
     }
+    
+    public ServiceAppointments getServiceAppointmentById(int id) {
+        String sql = "SELECT [id]\n"
+                + "      ,[appointments_id]\n"
+                + "      ,[service_id]\n"
+                + "  FROM [dbo].[service_appointments]\n"
+                + "  where id = ?";
+        AppointmentDAO ad = new AppointmentDAO();
+        ServiceDAO sd = new ServiceDAO();
+        ServiceAppointments sa;
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                sa = new ServiceAppointments();
+                sa.setId(rs.getInt("id"));
+                sa.setAppointment(ad.getAppointmentByID(rs.getInt("appointments_id")));
+                sa.setService(sd.getServiceById(rs.getInt("service_id")));
+                return sa;
+            }
+        } catch (Exception e) {
+        }
 
+        return null;
+    }
+
+    public void deleteServiceAppointmentById(int id) {
+        String sql = "DELETE FROM [dbo].[service_appointments]\n"
+                + "      WHERE id = ?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, id);
+            st.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+    
     public ArrayList<ServiceAppointments> getAllServiceAppointmentByAppointment(Appointment a) {
         String sql = "SELECT [id]\n"
                 + "      ,[appointments_id]\n"

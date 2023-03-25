@@ -99,17 +99,27 @@ public class BookingAppointmentServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String patientName = request.getParameter("name");
+       String patientName = request.getParameter("name");
         String drId_raw = request.getParameter("doctorid");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
         String date = request.getParameter("date");
         String slotId_raw = request.getParameter("slotid");
         String symptom = request.getParameter("symptom");
-
+        String mess = null;
+        
         Validate v = new Validate();
         if (v.IsDateBookingOk(date) == false) {
-            response.sendRedirect("booking");
+            mess = "Please choose date after today!!";
+            SpecializationDAO spd = new SpecializationDAO();
+            UserAccountDAO udd = new UserAccountDAO();
+            SlotDAO sd = new SlotDAO();
+            ArrayList<UserAccount> listUA = udd.getAllDoctor();
+            ArrayList<Slot> listSlot = sd.getAllSlot();
+            request.setAttribute("lsUA", listUA);
+            request.setAttribute("lsS", listSlot);
+            request.setAttribute("mess", mess);
+            request.getRequestDispatcher("bookingappointment.jsp").forward(request, response);
         } else {
 
             int drId, slotId;
@@ -169,12 +179,20 @@ public class BookingAppointmentServlet extends HttpServlet {
                     sap.setAppointment(ap);
                     sap.setService(sed.getServiceById(1));
                     sad.createServiceAppointment(sap);
-                    request.getRequestDispatcher("patientprofile").forward(request, response);
+                    response.sendRedirect("patientprofile");
+                } else {                  
+                    mess = "Doctor have appointment on that day or slot please choose another!!";
+                    SpecializationDAO spd = new SpecializationDAO();
+                    UserAccountDAO udd = new UserAccountDAO();
+                    ArrayList<UserAccount> listUA = udd.getAllDoctor();
+                    ArrayList<Slot> listSlot = sd.getAllSlot();
+                    request.setAttribute("lsUA", listUA);
+                    request.setAttribute("lsS", listSlot);
+                    request.setAttribute("mess", mess);
+                    request.getRequestDispatcher("bookingappointment.jsp").forward(request, response);
                 }
-
             } catch (Exception e) {
             }
-            response.sendRedirect("patientprofile");
         }
 
     }
